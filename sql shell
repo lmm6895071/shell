@@ -1,0 +1,24 @@
+#!/bin/bash
+SQL=`which mysql`
+echo $SQL
+sqlquery="$SQL -u root -p!QAZ2wsx -D jhss_log"
+ls=`$sqlquery -e 'show tables'`
+echo $ls
+ls=($ls)
+echo ${ls[0]} ${#ls[*]}
+len=$[${#ls[*]}-1]
+echo $len
+while(($len >0))
+do 
+    tablename=`echo ${ls[$len]} | grep 'log[1-2]'`
+    if [ -n "$tablename" ]
+    then
+       echo $tablename
+       ssql="select count(*) from $tablename"
+       ssql=`$sqlquery -e "$ssql"`
+       ssql=($ssql)
+       sum=$[$sum+ ${ssql[1]}]
+    fi 
+    len=$(($len-1))
+done
+echo $sum
