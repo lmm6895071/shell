@@ -10,7 +10,7 @@ len=$[${#ls[*]}-1]
 echo $len
 while(($len >0))
 do 
-    tablename=`echo ${ls[$len]} | grep 'log[1-2]'`
+    tablename=`echo ${ls[$len]} | grep 'log[1-9]'`
     if [ -n "$tablename" ]
     then
        echo $tablename
